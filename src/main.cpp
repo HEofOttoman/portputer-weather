@@ -3,6 +3,11 @@
 #include <Wifi.h>
 #include <HTTPClient.h>
 #include <time.h>
+#include <Arduino_JSON.h>
+
+#include <Wire.h>
+// #include <Adafruit_GFX.h>
+// #include <Adafruit_SSD1306.h>
 
 const char* ssid = "";
 const char* password = "";
@@ -26,7 +31,21 @@ void setup() {
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 }
 
+long startTime ;
+long elapsedTime ;
+
+unsigned long interval = 0;
+unsigned long previousMilis = 0;
+
 void loop() {
+    unsigned long currentMilis = millis();
+
+    if (currentMilis - previousMilis >= interval) {
+        previousMilis = currentMilis;
+        // code here..?
+
+    }
+
     struct tm timeinfo;
     if(!getLocalTime(&timeinfo)){
         Serial.println("Failed to obtain time");
@@ -52,6 +71,9 @@ void loop() {
             Serial.print("ERROR SENDING REQUEST");
             Serial.println(httpResponseCode);
         }
+
+        JSONVar obj = JSON.parse(http.getString());
+        Serial.println((double)obj["current_weather"]["temperature"]);
 
         http.end();
     }
