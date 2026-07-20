@@ -5,10 +5,6 @@
 #include <time.h>
 #include <Arduino_JSON.h>
 
-#include <Wire.h>
-// #include <Adafruit_GFX.h>
-// #include <Adafruit_SSD1306.h>
-
 const char* ssid = "";
 const char* password = "";
 
@@ -18,8 +14,19 @@ const char* ntpServer = "au.pool.ntp.org";
 
 const char* openmeteo_url = "https://open-meteo.com/en/docs?hourly=temperature_2m,showers,snowfall,snow_depth,rain,precipitation,weather_code,uv_index&timezone=auto&latitude=40.7143,-35.2835,-6.2146,-1.2833&longitude=-74.006,149.1281,106.8451,36.8167&forecast_days=1&bounding_box=-90,-180,90,180&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,rain_sum,precipitation_probability_max,temperature_2m_mean,weather_code&current=temperature_2m,precipitation,rain,showers,snowfall,is_day,apparent_temperature,weather_code,cloud_cover&timeformat=unixtime#current_weather";
 
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+
 void setup() {
     Serial.begin(115200);
+    
+    display.begin(SSD1306_SWITCHCAPVCC, 0x3c);
+    display.setTextColor(WHITE);
+    display.setTextSize(2);
+    
     M5Cardputer.begin();
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
