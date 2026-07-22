@@ -1,11 +1,11 @@
 #include <Arduino.h>
 #include <M5Cardputer.h>
-#include <Wifi.h>
+#include <WiFi.h>
 #include <HTTPClient.h>
 #include <time.h>
 #include <Arduino_JSON.h>
 
-const char* ssid = "";
+const char* ssid = "Wokwi-GUEST";
 const char* password = "";
 
 const long  gmtOffset_sec = 36000;
@@ -25,7 +25,7 @@ void setup() {
     
     display.begin(SSD1306_SWITCHCAPVCC, 0x3c);
     display.setTextColor(WHITE);
-    display.setTextSize(2);
+    display.setTextSize(1);
     
     M5Cardputer.begin();
     WiFi.mode(WIFI_STA);
@@ -74,13 +74,14 @@ void loop() {
             String response = http.getString();
             Serial.println(httpResponseCode);
             Serial.println(response);
+
+            JSONVar obj = JSON.parse(response);
+            Serial.println((double)obj["current_weather"]["temperature"]);
+
         } else {
             Serial.print("ERROR SENDING REQUEST");
             Serial.println(httpResponseCode);
         }
-
-        JSONVar obj = JSON.parse(http.getString());
-        Serial.println((double)obj["current_weather"]["temperature"]);
 
         http.end();
     }
