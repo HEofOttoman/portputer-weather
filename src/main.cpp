@@ -6,7 +6,7 @@
 #include <Arduino_JSON.h>
 
 const char* ssid = "Wokwi-GUEST";
-const char* password = "";
+const char* password = "kailebinkamo";
 
 const long  gmtOffset_sec = 36000;
 const int   daylightOffset_sec = 0;
