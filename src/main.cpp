@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <M5Cardputer.h>
+// #include <M5Cardputer.h>
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <time.h>
@@ -21,13 +21,17 @@ const char* openmeteo_url = "https://open-meteo.com/en/docs?hourly=temperature_2
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 void setup() {
+    // Serial.begin(115200);
     Serial.begin(115200);
-    
+        
     display.begin(SSD1306_SWITCHCAPVCC, 0x3c);
     display.setTextColor(WHITE);
     display.setTextSize(1);
     
-    M5Cardputer.begin();
+    // Uncomment when cardputer porting 
+    // M5Cardputer.begin();
+    
+
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED) {
