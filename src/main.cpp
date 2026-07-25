@@ -23,7 +23,7 @@ Adafruit_SSD1306 display(128, 64, &Wire, -1);
 void setup() {
     // Serial.begin(115200);
     Serial.begin(115200);
-        
+
     display.begin(SSD1306_SWITCHCAPVCC, 0x3c);
     display.setTextColor(WHITE);
     display.setTextSize(1);
