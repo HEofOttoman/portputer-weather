@@ -25,17 +25,22 @@ void setup() {
     // Serial.begin(115200);
     Serial.begin(115200);
 
+    // Wire.begin(); // Maybe this can work?
+
     // display.begin(SSD1306_SWITCHCAPVCC, 0x3D);
     if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
         Serial.println("OLED failed to boot.");
     }
 
+    display.clearDisplay();
     display.setTextColor(WHITE);
     display.setTextSize(1);
-    
+    display.print("OLED Initialised!");
+    Serial.print("OLED Initialised!");
+
     // Uncomment when cardputer porting 
     // M5Cardputer.begin();
-    
+
 
     WiFi.mode(WIFI_STA);
     WiFi.begin(SECRET_SSID, SECRET_PASS);
@@ -44,7 +49,7 @@ void setup() {
         delay(500);
         Serial.print(".");
     }
-    Serial.print("Success!");
+    Serial.println("Success!");
 
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 }
@@ -72,7 +77,7 @@ void loop() {
 
     
     Serial.println(&timeinfo, "%Y-%m-%d %H:%M:%S");
-    delay(1000);
+    delay(1000); // TO DO: Rework to use millis()
 
     if (WiFi.status() == WL_CONNECTED) {
         HTTPClient http;
