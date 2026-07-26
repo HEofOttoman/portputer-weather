@@ -5,8 +5,9 @@
 #include <time.h>
 #include <Arduino_JSON.h>
 
-const char* ssid = "Wokwi-GUEST";
-const char* password = "kailebinkamo";
+// const char* ssid = "";
+// const char* password = "";
+#include "secrets.h" // Contains SECRET_SSID & SECRET_PASS
 
 const long  gmtOffset_sec = 36000;
 const int   daylightOffset_sec = 0;
@@ -24,7 +25,11 @@ void setup() {
     // Serial.begin(115200);
     Serial.begin(115200);
 
-    display.begin(SSD1306_SWITCHCAPVCC, 0x3c);
+    // display.begin(SSD1306_SWITCHCAPVCC, 0x3D);
+    if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+        Serial.println("OLED failed to boot.");
+    }
+
     display.setTextColor(WHITE);
     display.setTextSize(1);
     
@@ -33,11 +38,13 @@ void setup() {
     
 
     WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, password);
+    WiFi.begin(SECRET_SSID, SECRET_PASS);
+    Serial.print("Connecting");
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
         Serial.print(".");
     }
+    Serial.print("Success!");
 
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 }
@@ -77,7 +84,7 @@ void loop() {
         if (httpResponseCode > 0) {
             String response = http.getString();
             Serial.println(httpResponseCode);
-            Serial.println(response);
+            // Serial.println(response);
 
             JSONVar obj = JSON.parse(response);
             Serial.println((double)obj["current_weather"]["temperature"]);
