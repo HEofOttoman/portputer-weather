@@ -19,7 +19,11 @@ const char* openmeteo_url = "https://open-meteo.com/en/docs?hourly=temperature_2
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-Adafruit_SSD1306 display(128, 64, &Wire, -1);
+#include <U8g2lib.h>
+#include <U8x8lib.h>
+// U8G2_SSD1306_128X64_NONAME_1_HW_I2C display(U8G2_R0, U8X8_PIN_NONE);
+U8X8_SH1106_128X64_NONAME_HW_I2C display(U8X8_PIN_NONE, U8X8_PIN_NONE);
+// Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 void setup() {
     // Serial.begin(115200);
@@ -28,16 +32,29 @@ void setup() {
     // Wire.begin(); // Maybe this can work?
 
     // display.begin(SSD1306_SWITCHCAPVCC, 0x3D);
-    if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-        Serial.println("OLED failed to boot.");
-    }
-    Serial.println("OLED Initialised!");
+    // if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    //     Serial.println("OLED failed to boot.");
+    // }
+    // Serial.println("OLED Initialised!");
 
-    display.clearDisplay();
-    display.print("Display reset.");
-    display.setTextColor(WHITE);
-    display.setTextSize(1);
-    display.print("Over I2C!");
+    // display.clearDisplay();
+    // display.print("Display reset.");
+    // display.setTextColor(WHITE);
+    // display.setTextSize(1);
+    // Serial.print("Over I2C!");
+    
+    display.begin();
+    
+    display.setFont(u8g2_font_ncenB08_tr);
+    display.drawString(0, 15, "Mode: SH1106");
+    display.drawString(0, 30, "Check border alignment:"); // This is for U8G2 SH1106
+    // display.drawStr(0, 15, "Mode: SH1106");
+    // display.drawStr(0, 30, "Check border alignment:"); // This is for U8G2 SSD1306
+    // Draw a box along the absolute edges (0,0 to 127,63)
+    // display.drawFrame(0, 0, 128, 64);
+
+    Serial.println("OLED SH1106 Initialised!");
+
     // Uncomment when cardputer porting 
     // M5Cardputer.begin();
 
