@@ -1,5 +1,7 @@
 #include <cmath>
-// Obtained & modified from https://aa.usno.navy.mil/faq/sun_approx
+// #include <Arduino.h>
+
+// Original constants obtained & modified from https://aa.usno.navy.mil/faq/sun_approx
 
 const float jd = 2461245.366563;
 const float d = jd - 2451545.0;  // Julian date offset
@@ -22,13 +24,20 @@ const int timeZone = 10; // Timezone? In UTC offset?
 float getNoon() {
     return 12 + timeZone - longitude/15 - EqT;
 }
-
+float calculateSunsetSunrise(float angle) {
+    return 1/15 * acos( (-sin(angle) -sin(L) * sin(D)) / (cos(L) * cos(D)) );
+}
 
 void fetchAllTimes() {
     const float noonTime = getNoon();
 
     int t = 1; // PLACEHOLDER PLEASE
     float A = 1/5 * acos ( sin(atan2(t + tan(L - D), t)) - sin(L) * sin(D) / cos(L) * cos(D)); // Check if I translated this correctly
+
+    float T = calculateSunsetSunrise(0.833);
+
+    float sunriseTime = noonTime - T;
+    float sunsetTime = noonTime + T;
 
     float afterNoon = noonTime + A * 2;
 }

@@ -80,7 +80,37 @@ unsigned long previousMilis = 0;
 
 
 void fetchHTTP() {
-    
+    HTTPClient http;
+
+    http.begin(openmeteo_url);
+
+    int httpResponseCode = http.GET();
+
+    if (httpResponseCode > 0) {
+        String response = http.getString();
+        Serial.println(httpResponseCode);
+        // Serial.println(response);
+
+        JSONVar obj = JSON.parse(response);
+
+        if (JSON.typeof_(obj) == "undefined") {
+            Serial.println("ERROR: JSON PARSING FAILED");
+            return;
+        }
+
+        const char* city = obj["city"];
+        float temp = (double)obj["main"]["temperature"];
+        int weather = obj["main"]["current_weather"];
+
+        // Serial.println((double)obj["current_weather"]["temperature"]);
+        Serial.printf("Weather in %s: %.1f°C", city, temp);
+
+    } else {
+        Serial.print("ERROR SENDING REQUEST");
+        Serial.println(httpResponseCode);
+    }
+
+    http.end();
 }
 
 void loop() {
@@ -103,26 +133,29 @@ void loop() {
     delay(1000); // TO DO: Rework to use millis()
 
     if (WiFi.status() == WL_CONNECTED) {
-        HTTPClient http;
+        fetchHTTP();
+        
+        // HTTPClient http;
 
-        http.begin(openmeteo_url);
+        // http.begin(openmeteo_url);
 
-        int httpResponseCode = http.GET();
+        // int httpResponseCode = http.GET();
 
-        if (httpResponseCode > 0) {
-            String response = http.getString();
-            Serial.println(httpResponseCode);
-            // Serial.println(response);
+        // if (httpResponseCode > 0) {
+        //     String response = http.getString();
+        //     Serial.println(httpResponseCode);
+        //     // Serial.println(response);
 
-            JSONVar obj = JSON.parse(response);
-            Serial.println((double)obj["current_weather"]["temperature"]);
+        //     JSONVar obj = JSON.parse(response);
+        //     // Serial.println((double)obj["current_weather"]["temperature"]);
+        //     Serial.println((double)obj["current_weather"]["temperature"]);
 
-        } else {
-            Serial.print("ERROR SENDING REQUEST");
-            Serial.println(httpResponseCode);
-        }
+        // } else {
+        //     Serial.print("ERROR SENDING REQUEST");
+        //     Serial.println(httpResponseCode);
+        // }
 
-        http.end();
+        // http.end();
     }
 
 }
