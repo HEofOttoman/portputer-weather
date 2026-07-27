@@ -31,13 +31,13 @@ void setup() {
     if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
         Serial.println("OLED failed to boot.");
     }
+    Serial.println("OLED Initialised!");
 
     display.clearDisplay();
+    display.print("Display reset.");
     display.setTextColor(WHITE);
     display.setTextSize(1);
-    display.print("OLED Initialised!");
-    Serial.print("OLED Initialised!");
-
+    display.print("Over I2C!");
     // Uncomment when cardputer porting 
     // M5Cardputer.begin();
 
