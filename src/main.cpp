@@ -88,7 +88,7 @@ unsigned long interval = 0;
 unsigned long previousMilis = 0;
 
 
-void fetchHTTP() {
+void fetchWeather() {
     HTTPClient http;
 
     http.begin(openmeteo_url);
@@ -114,7 +114,7 @@ void fetchHTTP() {
         float maxTemp = (double)obj["current"]["temperature_2m_max"];
 
         // Serial.println((double)obj["current_weather"]["temperature"]);
-        Serial.printf("Weather for %.4f lat %.4f long, for today : \n", latitude, longitude);
+        Serial.printf("Weather for %.4f lat %.4f long, for today: \n", latitude, longitude);
         Serial.printf("%.1f°C, with min of %.1f°C and max of %.1f°C \n", temp, minTemp, maxTemp);
 
     } else {
@@ -131,6 +131,7 @@ void loop() {
     if (currentMilis - previousMilis >= interval) {
         previousMilis = currentMilis;
         // code here..?
+        fetchWeather();
 
     }
 
@@ -145,29 +146,9 @@ void loop() {
     delay(1000); // TO DO: Rework to use millis()
 
     if (WiFi.status() == WL_CONNECTED) {
-        fetchHTTP();
         
-        // HTTPClient http;
-
-        // http.begin(openmeteo_url);
-
-        // int httpResponseCode = http.GET();
-
-        // if (httpResponseCode > 0) {
-        //     String response = http.getString();
-        //     Serial.println(httpResponseCode);
-        //     // Serial.println(response);
-
-        //     JSONVar obj = JSON.parse(response);
-        //     // Serial.println((double)obj["current_weather"]["temperature"]);
-        //     Serial.println((double)obj["current_weather"]["temperature"]);
-
-        // } else {
-        //     Serial.print("ERROR SENDING REQUEST");
-        //     Serial.println(httpResponseCode);
-        // }
-
-        // http.end();
+        
+        fetchWeather();
     }
 
 }

@@ -1,6 +1,7 @@
 # Cardputer Weather
 Weather?? On a cardputer??
-This project pulls data from the OpenMeteo API and displays it on the Cardputer.
+This project is a dashboard pulls data from the OpenMeteo API and displays it on the Cardputer.
+Also, it displays certain ritually significant times of the day calculated by an included algorithm.
 
 ## What is this?
 I have no clue! (YET!)
