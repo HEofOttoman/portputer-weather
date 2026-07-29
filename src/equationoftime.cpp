@@ -1,6 +1,7 @@
 #include <cmath>
 // #include <Arduino.h>
 
+// This is a C++ file designed to help me understand the ritual algorithm
 // Original constants obtained & modified from https://aa.usno.navy.mil/faq/sun_approx
 
 const float jd = 2461245.366563;

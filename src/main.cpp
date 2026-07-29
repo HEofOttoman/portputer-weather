@@ -89,6 +89,8 @@ unsigned long previousMilis = 0;
 
 
 void fetchWeather() {
+    tone(buzzerPin, 200, 100);
+
     HTTPClient http;
 
     http.begin(openmeteo_url);
@@ -128,6 +130,10 @@ void fetchWeather() {
 void loop() {
     unsigned long currentMilis = millis();
 
+    if (!WiFi.status() == WL_CONNECTED) {
+        Serial.print("Disconnected, reconnecting..");    
+    }
+
     if (currentMilis - previousMilis >= interval) {
         previousMilis = currentMilis;
         // code here..?
@@ -144,11 +150,5 @@ void loop() {
     
     Serial.println(&timeinfo, "%Y-%m-%d %H:%M:%S");
     delay(1000); // TO DO: Rework to use millis()
-
-    if (WiFi.status() == WL_CONNECTED) {
-        
-        
-        fetchWeather();
-    }
 
 }
