@@ -29,6 +29,10 @@ float calculateSunsetSunrise(float angle) {
     return 1/15 * acos( (-sin(angle) -sin(L) * sin(D)) / (cos(L) * cos(D)) );
 }
 
+float getAfternoon() {
+    
+}
+
 void fetchAllTimes() {
     const float noonTime = getNoon();
 

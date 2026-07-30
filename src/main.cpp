@@ -81,13 +81,6 @@ void setup() {
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 }
 
-long startTime ;
-long elapsedTime ;
-
-unsigned long interval = 0;
-unsigned long previousMilis = 0;
-
-
 void fetchWeather() {
     tone(buzzerPin, 200, 100);
 
@@ -127,6 +120,12 @@ void fetchWeather() {
     http.end();
 }
 
+long startTime ;
+long elapsedTime ;
+
+// unsigned long interval = 0;
+unsigned long previousMilis = 0;
+
 void loop() {
     unsigned long currentMilis = millis();
 
@@ -135,7 +134,7 @@ void loop() {
         return;
     }
 
-    if (currentMilis - previousMilis >= interval) {
+    if (currentMilis - previousMilis >= 0) { // How often to refresh the weather forecast (once every 60 minutes?)
         previousMilis = currentMilis;
         // code here..?
         fetchWeather();
@@ -148,7 +147,12 @@ void loop() {
         return;
     }
 
-    
+    if (currentMilis - previousMilis >= 60000) { // Prints new time every 60 seconds
+        previousMilis = currentMilis;
+        // fetchWeather();
+        display.println(&timeinfo, "%Y-%m-%d %H:%M:%S");
+
+    }
     Serial.println(&timeinfo, "%Y-%m-%d %H:%M:%S");
     delay(1000); // TO DO: Rework to use millis()
 
