@@ -1,4 +1,6 @@
 # Cardputer Weather
+![alt text](<portputer weather.jpg>)
+
 This project is a dashboard that pulls data from the OpenMeteo API and displays it on the OLED display of the Cardputer, or an OLED display connected to a cardputer.
 
 ## What is this?
