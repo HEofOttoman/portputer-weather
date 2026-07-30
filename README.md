@@ -14,9 +14,11 @@ For ESP32 - Create a header file called `secrets.h` and paste in the following c
 ```
 This is used to define your WiFi connection, change it accordingly.
 
+Then you might want to flash it with the `partitions.bin`, `bootloader.bin`, & `firmware.bin` files.
+
 ### Suffering
-I did some testing on [Wokwi.com](https://wokwi.com), their sims hate me very much
-ESP32 hates me apparently .
+I did some testing on [Wokwi.com](https://wokwi.com), their sims hate me very much.
+ESP32 hates me apparently.
 - Hold boot every time
 - Wrong chip
 - Serial was not declared in this scope

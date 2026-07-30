@@ -131,7 +131,8 @@ void loop() {
     unsigned long currentMilis = millis();
 
     if (!WiFi.status() == WL_CONNECTED) {
-        Serial.print("Disconnected, reconnecting..");    
+        Serial.print("Disconnected, reconnecting..");
+        return;
     }
 
     if (currentMilis - previousMilis >= interval) {
