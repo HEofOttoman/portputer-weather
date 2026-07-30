@@ -29,8 +29,11 @@ float calculateSunsetSunrise(float angle) {
     return 1/15 * acos( (-sin(angle) -sin(L) * sin(D)) / (cos(L) * cos(D)) );
 }
 
-float getAfternoon() {
-    
+float getAfternoon(float t) {
+    float Noon = getNoon();
+    // int t = 1; // PLACEHOLDER PLEASE
+    float A = 1/15 * acos( (sin(atan( 1 / (t + tan(L - D)))) - sin(L) * sin(D) ) / (cos(L) * cos(D)) ); // acot(x) = atan(1/x)
+    return A;  
 }
 
 void fetchAllTimes() {
@@ -39,10 +42,14 @@ void fetchAllTimes() {
     int t = 1; // PLACEHOLDER PLEASE
     float A = 1/5 * acos ( sin(atan2(t + tan(L - D), t)) - sin(L) * sin(D) / cos(L) * cos(D)); // Check if I translated this correctly
 
-    float T = calculateSunsetSunrise(0.833);
+    // float T = calculateSunsetSunrise(0.833);
+    int sunriseAngle = 20.0;
+    int eveningAngle = 18.0;
 
-    float sunriseTime = noonTime - T;
-    float sunsetTime = noonTime + T;
+    float sunriseTime = noonTime - calculateSunsetSunrise(sunriseAngle);
+    float eveningTime = noonTime + calculateSunsetSunrise(eveningAngle);
+
+    float sunsetTime = noonTime + calculateSunsetSunrise(4); 
 
     float afterNoon = noonTime + A * 2;
 }
