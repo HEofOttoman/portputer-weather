@@ -8,13 +8,14 @@
 class astronomicalPositions {
     private:
         /* data */
-        
+        float longitude;
+        float latitude;
 
     public:
         astronomicalPositions();
         ~astronomicalPositions();
         
-
+        void calculateTimes(float longt, float lat);
 };
 
 #endif

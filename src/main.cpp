@@ -28,7 +28,7 @@ float longitude = 149.1281;
 // U8X8_SH1106_128X64_NONAME_HW_I2C display(U8X8_PIN_NONE, U8X8_PIN_NONE);
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
-const uint8_t buzzerPin = 2;
+// const uint8_t buzzerPin = 2;
 
 void setup() {
     // Serial.begin(115200);
@@ -42,15 +42,16 @@ void setup() {
     Serial.println("OLED Initialised!");
 
     display.clearDisplay();
-    display.display();
-    display.print("Display reset.");
+    Serial.print("Display reset.");
     display.setTextColor(WHITE);
     display.setTextSize(1);
     display.clearDisplay();
+    display.display();
     display.setCursor(0,0);
     delay(100);
-    display.print("Hello?");
+    display.print("Hello? Over I2C?");
     Serial.print("Over I2C!");
+    display.display();
     
     // display.begin();
     // display.setFont(u8g2_font_ncenB08_tr);
@@ -63,11 +64,11 @@ void setup() {
 
     // Serial.println("OLED SH1106 Initialised!");
 
-    // Uncomment when cardputer porting 
+    // Uncomment when cardputer porting
     // M5Cardputer.begin();
 
-    pinMode(buzzerPin, OUTPUT);
-    tone(buzzerPin, 100, 100);
+    // pinMode(buzzerPin, OUTPUT);
+    // tone(buzzerPin, 100, 100);
 
     WiFi.mode(WIFI_STA);
     WiFi.begin(SECRET_SSID, SECRET_PASS);
@@ -82,13 +83,15 @@ void setup() {
 }
 
 void fetchWeather() {
-    tone(buzzerPin, 200, 100);
+    // tone(buzzerPin, 200, 100);
 
     HTTPClient http;
 
     http.begin(openmeteo_url);
 
     int httpResponseCode = http.GET();
+
+    display.setCursor(0, 10);
 
     if (httpResponseCode > 0) {
         String response = http.getString();
@@ -103,19 +106,21 @@ void fetchWeather() {
         }
 
         // const char* city = obj[""];
-        float temp = (double)obj["current"]["temperature"];
+        float temp = (double)obj["current"]["temperature_2m"];
         // float rainChance = (doubleobj["current"]["precipitation_probability_max"];
-        float minTemp = (double)obj["current"]["temperature_2m_min"]; 
-        float maxTemp = (double)obj["current"]["temperature_2m_max"];
+        float minTemp = (double)obj["daily"]["temperature_2m_min"]; 
+        float maxTemp = (double)obj["daily"]["temperature_2m_max"];
 
         // Serial.println((double)obj["current_weather"]["temperature"]);
         Serial.printf("Weather for %.4f lat %.4f long, for today: \n", latitude, longitude);
-        Serial.printf("%.1f°C, with min of %.1f°C and max of %.1f°C \n", temp, minTemp, maxTemp);
+        Serial.printf("Currently %.1f°C, with min of %.1f°C and max of %.1f°C \n", temp, minTemp, maxTemp);
 
     } else {
         Serial.print("ERROR SENDING REQUEST");
         Serial.println(httpResponseCode);
+        display.print("Could not fetch weather, trying again soon..");
     }
+    display.display();
 
     http.end();
 }
@@ -123,7 +128,6 @@ void fetchWeather() {
 long startTime ;
 long elapsedTime ;
 
-// unsigned long interval = 0;
 unsigned long previousMilis = 0;
 
 void loop() {
@@ -142,18 +146,22 @@ void loop() {
     }
 
     struct tm timeinfo;
-    if(!getLocalTime(&timeinfo)){
+    if(!getLocalTime(&timeinfo)) {
         Serial.println("Failed to obtain time");
+        // display.setCursor(0, 0);
+        // display.print("Reconnecting to time server..");
         return;
     }
 
     if (currentMilis - previousMilis >= 60000) { // Prints new time every 60 seconds
         previousMilis = currentMilis;
         // fetchWeather();
-        display.println(&timeinfo, "%Y-%m-%d %H:%M:%S");
-
+        display.setCursor(0, 0);
+        display.print("Current time:");
+        display.print(&timeinfo, "%Y-%m-%d %H:%M:%S");
+        display.display();
     }
     Serial.println(&timeinfo, "%Y-%m-%d %H:%M:%S");
-    delay(1000); // TO DO: Rework to use millis()
+    // delay(1000); // TO DO: Rework to use millis()
 
 }

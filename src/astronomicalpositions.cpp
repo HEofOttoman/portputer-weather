@@ -9,3 +9,7 @@ astronomicalPositions::astronomicalPositions() {
 astronomicalPositions::~astronomicalPositions() {
 
 };
+
+void calculatePositions(float longt, float lat) {
+    
+};
