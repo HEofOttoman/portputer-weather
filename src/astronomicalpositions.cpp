@@ -24,11 +24,11 @@ astronomicalPositions::astronomicalPositions(float lat, float longt) {
 
 // astronomicalPositions::~astronomicalPositions() {    };
 
-float getNoon(float longitude) {
+float astronomicalPositions::getNoon(float longitude) {
     return 12 + timeZone - longitude/15 - EqT;
 }
 
-void calculateTimes(float lat, float longt) {
+void astronomicalPositions::calculateTimes(float lat, float longt) {
     
     // Serial.printf("Initialised calculations for %.4f lat %.4f long", _latitude, _longitude);
     const float latitude = lat;

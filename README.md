@@ -18,10 +18,9 @@ If you have the hardware for the ESP32 Devkit to run it, you can compile & uploa
     #define SECRET_PASS ""
     ```
     This is used to define your WiFi connection, change it accordingly.
-3. Upload & compile with PlatformIO
+3. Upload & compile with PlatformIO (making sure that the circuit is connected to port COM3 or manually specified in `platformio.ini`)
 
 ~~Then you might want to flash it with the `partitions.bin`, `bootloader.bin`, & `firmware.bin` files.~~ *Actually nvm this only works with my specific network I compiled it with then*
-
 
 ## Suffering
 This is a small section that journals my issues in making this project. 
@@ -35,9 +34,9 @@ This is a small section that journals my issues in making this project.
 I spent 11 hours on this barely functioning project somehow hardware debugging is no joke
 
 ### Future Features(?)
-- Port to the Cardputer (speaker functionality)
-- Add ability to call/calculate from inputted coordinates (Cardputer keyboard integration)
-- Add better algorithm
+- [ ] Port to the Cardputer (speaker functionality)
+- [ ] Add ability to call/calculate from inputted coordinates (Cardputer keyboard integration)
+- [ ] Add better algorithm
 
 ---
 *Made for [portputer](https://portputer.hackclub.com)!*
