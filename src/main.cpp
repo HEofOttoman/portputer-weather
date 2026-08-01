@@ -129,6 +129,8 @@ long startTime ;
 long elapsedTime ;
 
 unsigned long previousMilis = 0;
+#include "astronomicalpositions.h"
+astronomicalPositions noonEtAl(latitude, longitude);
 
 void loop() {
     unsigned long currentMilis = millis();
@@ -141,6 +143,9 @@ void loop() {
     if (currentMilis - previousMilis >= 0) { // How often to refresh the weather forecast (once every 60 minutes?)
         previousMilis = currentMilis;
         // code here..?
+
+        noonEtAl.calculateTimes(latitude, longitude); // Prints to serial the time
+
         fetchWeather();
 
     }

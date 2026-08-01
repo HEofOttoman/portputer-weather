@@ -7,15 +7,19 @@
 
 class astronomicalPositions {
     private:
+        
+
+    
         /* data */
-        float longitude;
-        float latitude;
+        float _latitude;
+        float _longitude;
 
     public:
-        astronomicalPositions();
-        ~astronomicalPositions();
+        astronomicalPositions(float lat, float longt);
+        // ~astronomicalPositions();
         
-        void calculateTimes(float longt, float lat);
+        float getNoon(float longitude);
+        void calculateTimes(float lat, float longt);
 };
 
 #endif
