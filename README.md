@@ -1,5 +1,6 @@
 # Cardputer Weather
 ![Static oled](<portputer weather.jpg>)
+*Yea my OLED hates me*
 
 ## What is this?
 This project is a dashboard that pulls data from the OpenMeteo API (configured for Canberra) and displays it on the OLED display of the Cardputer, or an OLED display connected to a cardputer.
